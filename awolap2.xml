@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<Schema name="awolap">
+<!--
+  == This software is subject to the terms of the Eclipse Public License v1.0
+  == Agreement, available at the following URL:
+  == http://www.eclipse.org/legal/epl-v10.html.
+  == You must accept the terms of that agreement to use this software.
+  ==
+  == Copyright (C) 2000-2005 Julian Hyde
+  == Copyright (C) 2005-2011 Pentaho and others
+  == All Rights Reserved.
+  -->
+
+<!-- Shared dimensions -->
+
+  
+
+<!-- Sales -->
+<Cube name="INC" defaultMeasure="OrderQty">
+  <!-- Use annotations to provide translations of this cube's caption and
+       description into German and French. Use of annotations in this manner is
+       experimental and unsupported; just for testing right now. -->
+  
+  <Table name="salesfact"/>
+
+    
+  <Dimension name="Address" foreignKey ="AddressID">
+      <Hierarchy hasAll="true" allMemberName="All Address" primaryKey ="AddressID">
+      <Table name="Address"/>
+      <Level name="Address" column="City"/>
+      </Hierarchy>
+      
+  </Dimension>
+
+
+  <Dimension name="product" foreignKey = "ProductID">
+    <Hierarchy hasAll="true" allMemberName="All Product" primaryKey ="ProductID">
+      <Table name="Product" />
+      <Level name="Category" column="category"/>
+      <Level name="Product" column="PName" />
+    </Hierarchy>
+  </Dimension>
+
+  <Dimension name="Customer" foreignKey="CustomerID">
+    
+    <Hierarchy  hasAll  ="true" allMemberName="All Customers" primaryKey  = "CustomerID">
+        <Table name="customer"/>
+        <Level name="FullName" column="FullName"/>
+    </Hierarchy>
+  </Dimension>
+    
+  
+
+  <Measure name="SubTotal" column="SubTotal" aggregator="sum"
+      formatString="Standard"/>
+  <Measure name="OrderQty" column="OrderQty" aggregator="sum"
+      formatString="Standard"/>
+
+</Cube>
+
+
+
+</Schema>
